@@ -44,11 +44,12 @@ let rec run (i:Instruction) =
       run s1
       run s2
 
+let (++) int1 int2 = Add(int1,int2)
 let (><) s1 s2 = Sequence(s1,s2)
 let program = PrintLine(String "Foo") >< 
               PrintLine(String "Bar") ><
               PrintLine(Integer 2) ><
-              Add(Integer 5, String 6)
+              Integer 5 ++ Integer 8
 
 run program
 let unused = Console.ReadLine()
