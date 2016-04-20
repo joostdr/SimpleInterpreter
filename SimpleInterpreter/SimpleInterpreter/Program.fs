@@ -1,7 +1,8 @@
 ﻿open System
 
-type Then = Then
-type Else = Else
+(*let (<<) int1 int2 = isSmaller(int1,int2)
+let (>>) int1 int2 = isBigger(int1, int2)
+let (:=) int1 int2 = isEquals(int1, int2)*)
 
 type Expr =
     | Integer of int
@@ -13,11 +14,10 @@ type Instruction =
     | Add of Expr * Expr
     | Assign of string * Expr
     | Sequence of Instruction * Instruction
+//    | While of Expr * Instruction
+    | For of Expr * Expr * Expr * Instruction
 
-let sameType(expr1: Expr) (expr2: Expr) : bool = 
-    match expr1 with 
-    | expr2 -> true
-    | _ -> false
+
 
 let checkInt (e:Expr) : bool =
     match e with 
@@ -43,13 +43,32 @@ let rec run (i:Instruction) =
     | Sequence(s1,s2) ->
       run s1
       run s2
+    | For(expr, expr2, expr3, instr) -> 
+      if checkInt expr && checkInt expr2 && checkInt expr3 then
+         let intStart = parseInt(expr)
+         let intLimit = parseInt(expr2)
+         let intIncrement = parseInt(expr3)
+         
+         if intStart < intLimit then
+            let result = intStart + intIncrement
+            printfn "%A" result
 
-let (++) int1 int2 = Add(int1,int2)
+
+    (*| While(bool,instr) -> 
+      if !bool then
+        run instr
+      else if bool then
+        run instr *)
+        
+let (++) int1 int2 = Add(int1,int2)       
 let (><) s1 s2 = Sequence(s1,s2)
+let _for expr1 expr2 expr3 instr = For(expr1, expr2, expr3 instr)
+// let _while expr instr = While(expr,instr)
 let program = PrintLine(String "Foo") >< 
               PrintLine(String "Bar") ><
               PrintLine(Integer 2) ><
               Integer 5 ++ Integer 8
+
 
 run program
 let unused = Console.ReadLine()
