@@ -62,7 +62,7 @@ let rec run (i:Instruction) =
         
 let (++) int1 int2 = Add(int1,int2)       
 let (><) s1 s2 = Sequence(s1,s2)
-let _for expr1 expr2 expr3 instr = For(expr1, expr2, expr3 instr)
+//let _for expr1 expr2 expr3 instr = For(expr1, expr2, expr3 instr)
 // let _while expr instr = While(expr,instr)
 let program = PrintLine(String "Foo") >< 
               PrintLine(String "Bar") ><
